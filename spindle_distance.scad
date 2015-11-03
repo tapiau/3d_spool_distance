@@ -1,45 +1,48 @@
 $fn=60;
+d = 58;
+h = 70;
 
-module spindle_distance()
+module spindle_distance(d,h)
 {
+    r=d/2;
+    
     translate([0,0,10])
-    difference()
-    {
-        union()
+        difference()
         {
-            difference()
+            union()
             {
-                union()
+                cylinder(h=h/2,r1=r,r2=r-1);
+                
+                difference()
                 {
-                    cylinder(h=30,r=30);
-                    cylinder(h=54,r=19);
+                    union()
+                    {
+                        cylinder(h=h,r1=r/2,r2=r/2-1);
+                    }
+                    
+                    translate([-d/2,-1,0])
+                        cube([d,d,h]);
                 }
-                
-                translate([-30,-1,0])
-                    cube([60,60,60]);
+                translate([0,0,-5])
+                    cylinder(h=5,r1=r+10,r2=r);
+
+                translate([0,0,-10])
+                    cylinder(h=5,r=r+10);
             }
 
             difference()
             {
-                cylinder(h=20,r=30);
-                cylinder(h=60,r=20);
-                
-                translate([-30,-62,0])
-                    cube([60,60,60]);
+                cylinder(h=h/2,r=d/4);
+                    
+                translate([-d/2,-d-1,0])
+                    cube([d,d,h]);
             }
-
-            translate([0,0,-5])
-                cylinder(h=5,r1=40,r2=30);
-
             translate([0,0,-10])
-                cylinder(h=5,r=40);
+                cylinder(r=5,h=80);
         }
-        translate([0,0,-10])
-            cylinder(r=5,h=80);
-    }
 }
 
-spindle_distance();
+spindle_distance(d,h);
 
 //translate([0,0,75])
 //rotate([0,180,180])
